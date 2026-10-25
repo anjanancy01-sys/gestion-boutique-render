@@ -12,9 +12,13 @@ export default function Login({ onConnecte }) {
     setEnvoi(true);
     setErreur("");
     try {
-      const r = await api.login(username.trim(), password);
-      onConnecte({ token: r.token, username: r.username });
-    } catch (err) {
+      const response = await fetch('https://anaran-ny-backend.onrender.com/api/token/', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ username, password }),
+});
       setErreur(err.message);
     } finally {
       setEnvoi(false);
